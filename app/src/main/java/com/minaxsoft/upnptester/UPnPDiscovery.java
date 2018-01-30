@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.PortUnreachableException;
 import java.net.UnknownHostException;
+import java.nio.channels.IllegalBlockingModeException;
 import java.util.HashSet;
 
 /**
@@ -101,9 +103,19 @@ public class UPnPDiscovery extends AsyncTask
                     curTime = System.currentTimeMillis();
                 }
 
-            } catch (Exception e) {
-                logger("Multistate Lock acquired  \n" + e.toString());
+
+            } catch (IOException e) {
+                logger("IOEx  \n" + e.toString());
+            } catch (SecurityException e) {
+                logger("SecEx  \n" + e.toString());
+            } catch (IllegalBlockingModeException e) {
+                logger("BlockEx  \n" + e.toString());
+            } catch (IllegalArgumentException e) {
+                logger("ArgEx  \n" + e.toString());
+            } catch (InterruptedException e) {
+                logger("IntEx  \n" + e.toString());
             }
+
             finally {
 
                 socket.close();
