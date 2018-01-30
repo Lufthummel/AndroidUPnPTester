@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAvailable(Network network) {
-                log.append("Connection Manager: Network Available " + network.toString() + "\n");
+                log.append("Connection Manager: Binding Network  " + network.toString() + "\n");
 
                 connection_manager.bindProcessToNetwork(network);
                 //ConnectivityManager.setProcessDefaultNetwork(network);
