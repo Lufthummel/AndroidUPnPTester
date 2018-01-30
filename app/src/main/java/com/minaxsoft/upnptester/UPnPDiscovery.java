@@ -68,17 +68,21 @@ public class UPnPDiscovery extends AsyncTask
                                 "ST: ssdp:all\r\n"+  // Use this for all UPnP Devices
                                 "\r\n";
 
+                logger("before sending discovery " + System.currentTimeMillis() + "\n");
                 socket = new DatagramSocket(port);
                 socket.setReuseAddress(true);
 
                 DatagramPacket dgram = new DatagramPacket(query.getBytes(), query.length(),
                         group, port);
+                Thread.sleep(500);
                 socket.send(dgram);
 
-                logger("sending discovery " + query + "\n");
+
 
                 long time = System.currentTimeMillis();
                 long curTime = System.currentTimeMillis();
+
+                logger("after    sending discovery " + System.currentTimeMillis() + "\n");
 
                 // Let's consider all the responses we can get in 1 second
                 while (curTime - time < 1000) {
@@ -87,7 +91,7 @@ public class UPnPDiscovery extends AsyncTask
 
                     String s = new String(p.getData(), 0, p.getLength());
 
-                    logger("Answer received" + s +  "\n");
+                    logger("Answer received\n" + s +  "\n");
                     /*if (s.toUpperCase().equals("HTTP/1.1 200")) {
                         addresses.add(p.getAddress().getHostAddress());
                     }
