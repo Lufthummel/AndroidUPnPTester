@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Vi
 
     public void processFinish(UPnPDiscovery.UPnPDevice output) {
         disc.setBackgroundColor(Color.RED);
+        isRunning = false;
+        disc.setEnabled(true);
     }
 
 
@@ -109,25 +111,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Vi
                 isRunning = true;
 
                 discover.execute();
-                try {
-                    Thread.sleep(1500);
-                    String[] devices = discover.addresses.toArray(new String[discover.addresses.size()]);
 
-                    for (String device : devices) {
-                        log.append(device);
 
-                    }
-
-                    discover.cancel(true);
-
-                } catch (InterruptedException e) {
-                    log.append("Exception during discovery \n");
-
-                }
-
-                isRunning = false;
                 logger("--> finished discovery\n");
-                disc.setEnabled(true);
+
             }
         } catch (Exception e) {
             Log.d(TAG, "error starting discovery");
